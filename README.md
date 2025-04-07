@@ -1,16 +1,22 @@
-## Hi there 👋
+# 💫<span style="color: blue; font-style: italic;">About Me</span> :
+Hello GitHub users, I'm Daniela Estupiñan.
 
-<!--
-**DanielaE7/DanielaE7** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+## 🌐<span style="color: blue; font-style: italic;">Socials</span>
+[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/__dankiela.7_) 
 
-Here are some ideas to get you started:
+# 💻<span style="color: blue; font-style: italic;">Tech Stack</span>
+![Canva](https://img.shields.io/badge/Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white)
+# 📊<span style="color: blue; font-style: italic;">GitHub Stats</span> :
+![](https://github-readme-stats.vercel.app/api?username=DanielaE7&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true)<br/>
+![](https://github-readme-streak-stats.herokuapp.com/?user=DanielaE7&theme=tokyonight&hide_border=true)<br/>
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=DanielaE7&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true&layout=compact)
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+### ✍️<span style="color: blue; font-style: italic;">Random Dev Quote</span>
+![](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical)
+
+### 😂<span style="color: blue; font-style: italic;">Random Dev Meme</span>
+<img src="https://random-memer.herokuapp.com/" width="512px"/>
+
+---
+[![](https://visitcount.itsvg.in/api?id=DanielaE7&icon=0&color=0)](https://visitcount.itsvg.in)
+
