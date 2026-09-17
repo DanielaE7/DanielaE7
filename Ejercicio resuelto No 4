@@ -1,0 +1,9 @@
+Edad_juan = int(input("Introduce la edad de Juan: "))
+Edad_alberto = (2/3) * edad_juan
+Edad_ana = (4/3) * edad_juan
+Edad_mama = edad_juan + edad_alberto + edad_ana
+
+print(f"Juan tiene: {Edad_juan} años.")
+print(f"Alberto tiene: {Edad_alberto:.1f} años.")
+print(f"Ana tiene: {Edad_ana:.1f} años.")
+print(f"La mamá tiene: {Edad_mama:.1f} años.") 
