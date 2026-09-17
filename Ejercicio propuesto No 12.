@@ -1,0 +1,12 @@
+horas_trabajadas = 48
+valor_hora = 5000
+porcentaje_retencion = 12.5 / 100  # Convertimos el 12.5% a decimal (0.125)
+
+salario_bruto = horas_trabajadas * valor_hora
+retencion = salario_bruto * porcentaje_retencion
+salario_neto = salario_bruto - retencion
+
+print("--- RESUMEN DE PAGO ---")
+print(f"Salario Bruto:       ${salario_bruto:,.0f}")
+print(f"Retención (12.5%):   ${retencion:,.0f}")
+print(f"Salario Neto:        ${salario_neto:,.0f}")
