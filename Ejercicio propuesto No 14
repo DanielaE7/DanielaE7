@@ -1,0 +1,8 @@
+numero = float(input("Introduce un número: "))
+
+cuadrado = numero ** 2
+cubo = numero ** 3
+
+print(f"Número original: {numero}")
+print(f"El cuadrado es:  {cuadrado}")
+print(f"El cubo es:      {cubo}") 
