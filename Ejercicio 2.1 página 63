@@ -1,0 +1,58 @@
+public class Persona { 
+ 
+    String nombre; 
+    String apellidos; 
+    String numeroDocumentoIdentidad; 
+    int añoNacimiento; 
+ 
+    Persona(String nombre, String apellidos, String  
+numeroDocumentoIdentidad, int añoNacimiento) { 
+       this.nombre = nombre; 
+       this.apellidos = apellidos; 
+       this.numeroDocumentoIdentidad = numeroDocumentoIdentidad; 
+       this.añoNacimiento = añoNacimiento; 
+   } 
+ 
+   void imprimir() { 
+       System.out.println("Nombre = " + nombre); 
+       System.out.println("Apellidos = " + apellidos); 
+       System.out.println("Número de documento de identidad = " + 
+numeroDocumentoIdentidad); 
+       System.out.println("Año de nacimiento = " + añoNacimiento); 
+       System.out.println(); 
+   } 
+ 
+   public static void main(String[] args) { 
+       Scanner scanner = new Scanner(System.in); 
+ 
+       System.out.println("=== Datos de la Persona 1 ==="); 
+       System.out.print("Nombre: "); 
+       String nombre1 = scanner.nextLine(); 
+       System.out.print("Apellidos: "); 
+       String apellidos1 = scanner.nextLine(); 
+       System.out.print("Número de documento de identidad: "); 
+       String doc1 = scanner.nextLine(); 
+       System.out.print("Año de nacimiento: "); 
+       int año1 = scanner.nextInt(); 
+       scanner.nextLine(); 
+ 
+       System.out.println("\n=== Datos de la Persona 2 ==="); 
+       System.out.print("Nombre: "); 
+       String nombre2 = scanner.nextLine(); 
+       System.out.print("Apellidos: "); 
+       String apellidos2 = scanner.nextLine(); 
+ 
+System.out.print("Número de documento de identidad: "); 
+String doc2 = scanner.nextLine(); 
+System.out.print("Año de nacimiento: "); 
+int año2 = scanner.nextInt(); 
+scanner.nextLine(); 
+Persona p1 = new Persona(nombre1, apellidos1, doc1, año1); 
+Persona p2 = new Persona(nombre2, apellidos2, doc2, año2); 
+System.out.println("\n=== Información de las personas 
+==="); 
+p1.imprimir(); 
+p2.imprimir(); 
+scanner.close(); 
+} 
+} 
