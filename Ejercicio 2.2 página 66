@@ -1,0 +1,135 @@
+public class Planeta { 
+String nombre = null; 
+int cantidadSatelites = 0; 
+ 
+   double masa = 0; 
+   double volumen = 0; 
+   int diametro = 0; 
+   int distanciaSol = 0; 
+ 
+    
+   enum tipoPlaneta { GASEOSO, TERRESTRE, ENANO } 
+ 
+   tipoPlaneta tipo; 
+   boolean esObservable = false; 
+ 
+   Planeta(String nombre, int cantidadSatelites, double masa, 
+double volumen, 
+           int diametro, int distanciaSol, tipoPlaneta tipo, 
+boolean esObservable) { 
+       this.nombre = nombre; 
+       this.cantidadSatelites = cantidadSatelites; 
+       this.masa = masa; 
+       this.volumen = volumen; 
+       this.diametro = diametro; 
+       this.distanciaSol = distanciaSol; 
+       this.tipo = tipo; 
+       this.esObservable = esObservable; 
+   } 
+ 
+   void imprimir() { 
+       System.out.println("Nombre del planeta = " + nombre); 
+       System.out.println("Cantidad de satélites = " + 
+cantidadSatelites); 
+       System.out.println("Masa del planeta = " + masa); 
+       System.out.println("Volumen del planeta = " + volumen); 
+       System.out.println("Diámetro del planeta = " + diametro); 
+       System.out.println("Distancia al sol = " + distanciaSol); 
+       System.out.println("Tipo de planeta = " + tipo); 
+       System.out.println("Es observable = " + esObservable); 
+   } 
+ 
+   double calcularDensidad() { 
+       return masa / volumen; 
+   } 
+ 
+   boolean esPlanetaExterior() { 
+       float limite = (float) (149597870 * 3.4); 
+       if (distanciaSol > limite) { 
+           return true; 
+       } else { 
+           return false; 
+       } 
+ 
+ 
+   } 
+ 
+   private static tipoPlaneta leerTipoPlaneta(Scanner scanner) { 
+       System.out.print("Tipo de planeta (1=GASEOSO, 2=TERRESTRE, 
+3=ENANO): "); 
+       int opcion = scanner.nextInt(); 
+       scanner.nextLine(); 
+       return switch (opcion) { 
+           case 1 -> tipoPlaneta.GASEOSO; 
+           case 2 -> tipoPlaneta.TERRESTRE; 
+           default -> tipoPlaneta.ENANO; 
+       }; 
+   } 
+ 
+   public static void main(String[] args) { 
+       Scanner scanner = new Scanner(System.in); 
+ 
+       System.out.println("=== Datos del Planeta 1 ==="); 
+       System.out.print("Nombre: "); 
+       String nombre1 = scanner.nextLine(); 
+       System.out.print("Cantidad de satélites: "); 
+       int satelites1 = scanner.nextInt(); 
+       System.out.print("Masa (kg): "); 
+       double masa1 = scanner.nextDouble(); 
+       System.out.print("Volumen (km³): "); 
+       double volumen1 = scanner.nextDouble(); 
+       System.out.print("Diámetro (km): "); 
+       int diametro1 = scanner.nextInt(); 
+       System.out.print("Distancia al sol (km): "); 
+       int distancia1 = scanner.nextInt(); 
+       scanner.nextLine(); 
+       tipoPlaneta tipo1 = leerTipoPlaneta(scanner); 
+       System.out.print("¿Es observable a simple vista? 
+(true/false): "); 
+       boolean observable1 = scanner.nextBoolean(); 
+       scanner.nextLine(); 
+ 
+       System.out.println("\n=== Datos del Planeta 2 ==="); 
+       System.out.print("Nombre: "); 
+       String nombre2 = scanner.nextLine(); 
+       System.out.print("Cantidad de satélites: "); 
+       int satelites2 = scanner.nextInt(); 
+       System.out.print("Masa (kg): "); 
+       double masa2 = scanner.nextDouble(); 
+       System.out.print("Volumen (km³): "); 
+       double volumen2 = scanner.nextDouble(); 
+       System.out.print("Diámetro (km): "); 
+       int diametro2 = scanner.nextInt(); 
+ 
+ 
+       System.out.print("Distancia al sol (km): "); 
+       int distancia2 = scanner.nextInt(); 
+       scanner.nextLine(); 
+       tipoPlaneta tipo2 = leerTipoPlaneta(scanner); 
+       System.out.print("¿Es observable a simple vista? 
+(true/false): "); 
+       boolean observable2 = scanner.nextBoolean(); 
+       scanner.nextLine(); 
+ 
+       Planeta p1 = new Planeta(nombre1, satelites1, masa1, 
+volumen1, diametro1, distancia1, tipo1, observable1); 
+       Planeta p2 = new Planeta(nombre2, satelites2, masa2, 
+volumen2, diametro2, distancia2, tipo2, observable2); 
+ 
+       System.out.println("\n=== Información de los planetas 
+==="); 
+       p1.imprimir(); 
+       System.out.println("Densidad del planeta = " + 
+p1.calcularDensidad()); 
+       System.out.println("Es planeta exterior = " + 
+p1.esPlanetaExterior()); 
+       System.out.println(); 
+       p2.imprimir(); 
+       System.out.println("Densidad del planeta = " + 
+p2.calcularDensidad()); 
+       System.out.println("Es planeta exterior = " + 
+p2.esPlanetaExterior()); 
+ 
+       scanner.close(); 
+   } 
+}
