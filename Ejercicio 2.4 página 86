@@ -1,0 +1,162 @@
+Círculo 
+ 
+public class Circulo { 
+ 
+   int radio; 
+ 
+   Circulo(int radio) { 
+       this.radio = radio; 
+   } 
+ 
+   double calcularArea() { 
+       return Math.PI * Math.pow(radio, 2); 
+   } 
+ 
+   double calcularPerimetro() { 
+       return 2 * Math.PI * radio; 
+   } 
+} 
+ 
+ 
+Cuadrado 
+public class Cuadrado { 
+ 
+   int lado; 
+ 
+   Cuadrado(int lado) { 
+       this.lado = lado; 
+   } 
+ 
+   double calcularArea() { 
+       return lado * lado; 
+   } 
+ 
+   double calcularPerimetro() { 
+       return 4 * lado; 
+   } 
+} 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Rectangulo 
+public class Rectangulo { 
+ 
+   int base; 
+   int altura; 
+ 
+   Rectangulo(int base, int altura) { 
+       this.base = base; 
+       this.altura = altura; 
+   } 
+ 
+   double calcularArea() { 
+       return base * altura; 
+   } 
+ 
+   double calcularPerimetro() { 
+       return (2 * base) + (2 * altura); 
+   } 
+} 
+ 
+ 
+ 
+Triángulo Rectangulo 
+ 
+public class TrianguloRectangulo { 
+ 
+   int base; 
+   int altura; 
+ 
+   TrianguloRectangulo(int base, int altura) { 
+       this.base = base; 
+       this.altura = altura; 
+   } 
+ 
+   double calcularArea() { 
+       return (base * altura) / 2.0; 
+   } 
+ 
+   double calcularHipotenusa() { 
+       return Math.pow(base * base + altura * altura, 0.5); 
+   } 
+ 
+   double calcularPerimetro() { 
+       return base + altura + calcularHipotenusa(); 
+   } 
+ 
+   void determinarTipoTriangulo() { 
+ 
+ 
+       if ((base == altura) && (base == calcularHipotenusa()) && 
+(altura == calcularHipotenusa())) 
+           System.out.println("Es un triángulo equilátero"); 
+       else if ((base != altura) && (base != calcularHipotenusa()) 
+&& (altura != calcularHipotenusa())) 
+           System.out.println("Es un triángulo escaleno"); 
+       else 
+           System.out.println("Es un triángulo isósceles"); 
+   } 
+} 
+ 
+ 
+ 
+Prueba Figuras 
+ 
+public class PruebaFiguras { 
+ 
+   public static void main(String[] args) { 
+       Scanner scanner = new Scanner(System.in); 
+ 
+       System.out.print("Radio del círculo (cm): "); 
+       int radio = scanner.nextInt(); 
+ 
+       System.out.print("Base del rectángulo (cm): "); 
+       int baseRect = scanner.nextInt(); 
+       System.out.print("Altura del rectángulo (cm): "); 
+       int altRect = scanner.nextInt(); 
+ 
+       System.out.print("Lado del cuadrado (cm): "); 
+       int lado = scanner.nextInt(); 
+ 
+       System.out.print("Base del triángulo rectángulo (cm): "); 
+       int baseTri = scanner.nextInt(); 
+       System.out.print("Altura del triángulo rectángulo (cm): "); 
+       int altTri = scanner.nextInt(); 
+ 
+       Circulo figura1 = new Circulo(radio); 
+       Rectangulo figura2 = new Rectangulo(baseRect, altRect); 
+       Cuadrado figura3 = new Cuadrado(lado); 
+       TrianguloRectangulo figura4 = new 
+TrianguloRectangulo(baseTri, altTri); 
+ 
+       System.out.println("\nEl área del círculo es = " + 
+figura1.calcularArea()); 
+       System.out.println("El perímetro del círculo es = " + 
+figura1.calcularPerimetro()); 
+ 
+ 
+System.out.println("\nEl área del rectángulo es = " + 
+figura2.calcularArea()); 
+System.out.println("El perímetro del rectángulo es = " + 
+figura2.calcularPerimetro()); 
+System.out.println("\nEl área del cuadrado es = " + 
+figura3.calcularArea()); 
+System.out.println("El perímetro del cuadrado es = " + 
+figura3.calcularPerimetro()); 
+System.out.println("\nEl área del triángulo es = " + 
+figura4.calcularArea()); 
+System.out.println("El perímetro del triángulo es = " + 
+figura4.calcularPerimetro()); 
+System.out.println("La hipotenusa del triángulo es = " + 
+figura4.calcularHipotenusa()); 
+figura4.determinarTipoTriangulo(); 
+scanner.close(); 
+} 
+} 
