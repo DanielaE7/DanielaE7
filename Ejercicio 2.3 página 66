@@ -1,0 +1,219 @@
+public class Automovil { 
+ 
+   String marca; 
+   int modelo; 
+   int motor; 
+ 
+   enum tipoCom { GASOLINA, BIOETANOL, DIESEL, BIODIESEL, 
+GAS_NATURAL } 
+   tipoCom tipoCombustible; 
+ 
+   enum tipoA { CIUDAD, SUBCOMPACTO, COMPACTO, FAMILIAR, EJECUTIVO, 
+SUV } 
+   tipoA tipoAutomovil; 
+ 
+   int numeroPuertas; 
+   int cantidadAsientos; 
+   int velocidadMaxima; 
+ 
+   enum tipoColor { BLANCO, NEGRO, ROJO, NARANJA, AMARILLO, VERDE, 
+AZUL, VIOLETA } 
+   tipoColor color; 
+ 
+   int velocidadActual = 0; 
+ 
+   Automovil(String marca, int modelo, int motor, 
+tipoComtipoCombustible, 
+             tipoA tipoAutomovil, int numeroPuertas, int 
+cantidadAsientos, 
+             int velocidadMaxima, tipoColor color) { 
+       this.marca = marca; 
+       this.modelo = modelo; 
+       this.motor = motor; 
+       this.tipoCombustible = tipoCombustible; 
+       this.tipoAutomovil = tipoAutomovil; 
+       this.numeroPuertas = numeroPuertas; 
+       this.cantidadAsientos = cantidadAsientos; 
+       this.velocidadMaxima = velocidadMaxima; 
+       this.color = color; 
+   } 
+ 
+   String getMarca() { return marca; } 
+   int getModelo() { return modelo; } 
+   int getMotor() { return motor; } 
+   tipoCom getTipoCombustible() { return tipoCombustible; } 
+ 
+ 
+    
+   tipoA getTipoAutomovil() { return tipoAutomovil; } 
+   int getNumeroPuertas() { return numeroPuertas; } 
+   int getCantidadAsientos() { return cantidadAsientos; } 
+   int getVelocidadMaxima() { return velocidadMaxima; } 
+   tipoColor getColor() { return color; } 
+   int getVelocidadActual() { return velocidadActual; } 
+ 
+   void setMarca(String marca) { this.marca = marca; } 
+   void setModelo(int modelo) { this.modelo = modelo; } 
+   void setMotor(int motor) { this.motor = motor; } 
+   void setTipoCombustible(tipoCom tipoCombustible) { 
+this.tipoCombustible = tipoCombustible; } 
+   void setTipoAutomovil(tipoA tipoAutomovil) { this.tipoAutomovil 
+= tipoAutomovil; } 
+   void setNumeroPuertas(int numeroPuertas) { this.numeroPuertas = 
+numeroPuertas; } 
+   void setCantidadAsientos(int cantidadAsientos) { 
+this.cantidadAsientos = cantidadAsientos; } 
+   void setVelocidadMaxima(int velocidadMaxima) { 
+this.velocidadMaxima = velocidadMaxima; } 
+   void setColor(tipoColor color) { this.color = color; } 
+   void setVelocidadActual(int velocidadActual) { 
+this.velocidadActual = velocidadActual; } 
+ 
+   void acelerar(int incremento) { 
+       if (velocidadActual + incremento <= velocidadMaxima) { 
+           velocidadActual = velocidadActual + incremento; 
+       } else { 
+           System.out.println("No se puede incrementar a una 
+velocidad superior a la máxima del automóvil."); 
+       } 
+   } 
+ 
+   void desacelerar(int decremento) { 
+       if ((velocidadActual - decremento) > 0) { 
+           velocidadActual = velocidadActual - decremento; 
+       } else { 
+           System.out.println("No se puede decrementar a una 
+velocidad negativa."); 
+       } 
+   } 
+ 
+   void frenar() { 
+       velocidadActual = 0; 
+   } 
+ 
+   double calcularTiempoLlegada(int distancia) { 
+ 
+ 
+       return (double) distancia / velocidadActual; 
+   } 
+ 
+   void imprimir() { 
+       System.out.println("Marca = " + marca); 
+       System.out.println("Modelo = " + modelo); 
+       System.out.println("Motor = " + motor + "L"); 
+       System.out.println("Tipo de combustible = " + 
+tipoCombustible); 
+       System.out.println("Tipo de automóvil = " + tipoAutomovil); 
+       System.out.println("Número de puertas = " + numeroPuertas); 
+       System.out.println("Cantidad de asientos = " + 
+cantidadAsientos); 
+       System.out.println("Velocidad máxima = " + velocidadMaxima 
++ " km/h"); 
+       System.out.println("Color = " + color); 
+   } 
+ 
+   private static tipoCom leerTipoCombustible(Scanner scanner) { 
+       System.out.print("Tipo de combustible (1=GASOLINA, 
+2=BIOETANOL, 3=DIESEL, 4=BIODIESEL, 5=GAS_NATURAL): "); 
+       int op = scanner.nextInt(); scanner.nextLine(); 
+       return switch (op) { 
+           case 1 -> tipoCom.GASOLINA; 
+           case 2 -> tipoCom.BIOETANOL; 
+           case 3 -> tipoCom.DIESEL; 
+           case 4 -> tipoCom.BIODIESEL; 
+           default -> tipoCom.GAS_NATURAL; 
+       }; 
+   } 
+ 
+   private static tipoA leerTipoAutomovil(Scanner scanner) { 
+       System.out.print("Tipo de automóvil (1=CIUDAD, 
+2=SUBCOMPACTO, 3=COMPACTO, 4=FAMILIAR, 5=EJECUTIVO, 6=SUV): "); 
+       int op = scanner.nextInt(); scanner.nextLine(); 
+       return switch (op) { 
+           case 1 -> tipoA.CIUDAD; 
+           case 2 -> tipoA.SUBCOMPACTO; 
+           case 3 -> tipoA.COMPACTO; 
+           case 4 -> tipoA.FAMILIAR; 
+           case 5 -> tipoA.EJECUTIVO; 
+           default -> tipoA.SUV; 
+       }; 
+   } 
+ 
+   private static tipoColor leerColor(Scanner scanner) { 
+       System.out.print("Color (1=BLANCO, 2=NEGRO, 3=ROJO, 
+4=NARANJA, 5=AMARILLO, 6=VERDE, 7=AZUL, 8=VIOLETA): "); 
+ 
+ 
+       int op = scanner.nextInt(); scanner.nextLine(); 
+       return switch (op) { 
+           case 1 -> tipoColor.BLANCO; 
+           case 2 -> tipoColor.NEGRO; 
+           case 3 -> tipoColor.ROJO; 
+           case 4 -> tipoColor.NARANJA; 
+           case 5 -> tipoColor.AMARILLO; 
+           case 6 -> tipoColor.VERDE; 
+           case 7 -> tipoColor.AZUL; 
+           default -> tipoColor.VIOLETA; 
+       }; 
+   } 
+ 
+   public static void main(String[] args) { 
+       Scanner scanner = new Scanner(System.in); 
+ 
+       System.out.println("=== Datos del Automóvil ==="); 
+       System.out.print("Marca: "); 
+       String marca = scanner.nextLine(); 
+       System.out.print("Modelo (año): "); 
+       int modelo = scanner.nextInt(); 
+       System.out.print("Motor (litros): "); 
+       int motor = scanner.nextInt(); 
+       scanner.nextLine(); 
+       tipoCom combustible = leerTipoCombustible(scanner); 
+       tipoA tipoAuto = leerTipoAutomovil(scanner); 
+       System.out.print("Número de puertas: "); 
+       int puertas = scanner.nextInt(); 
+       System.out.print("Cantidad de asientos: "); 
+       int asientos = scanner.nextInt(); 
+       System.out.print("Velocidad máxima (km/h): "); 
+       int velMax = scanner.nextInt(); 
+       scanner.nextLine(); 
+       tipoColor color = leerColor(scanner); 
+ 
+       Automovil auto1 = new Automovil(marca, modelo, motor, 
+combustible, tipoAuto, puertas, asientos, velMax, color); 
+ 
+       System.out.println("\n=== Información del Automóvil ==="); 
+       auto1.imprimir(); 
+ 
+       System.out.print("\nIngrese velocidad inicial (km/h): "); 
+       int velInicial = scanner.nextInt(); 
+       auto1.setVelocidadActual(velInicial); 
+       System.out.println("Velocidad actual = " + 
+auto1.getVelocidadActual() + " km/h"); 
+ 
+ 
+ 
+       System.out.print("Ingrese incremento de velocidad (km/h): 
+"); 
+       int incremento = scanner.nextInt(); 
+       auto1.acelerar(incremento); 
+       System.out.println("Velocidad actual = " + 
+auto1.getVelocidadActual() + " km/h"); 
+ 
+       System.out.print("Ingrese decremento de velocidad (km/h): 
+"); 
+       int decremento = scanner.nextInt(); 
+       auto1.desacelerar(decremento); 
+       System.out.println("Velocidad actual = " + 
+auto1.getVelocidadActual() + " km/h"); 
+ 
+       auto1.frenar(); 
+       System.out.println("Freno aplicado. Velocidad actual = " + 
+auto1.getVelocidadActual() + " km/h"); 
+ 
+       auto1.desacelerar(20); 
+ 
+       scanner.close(); 
+   } 
+} 
+ 
