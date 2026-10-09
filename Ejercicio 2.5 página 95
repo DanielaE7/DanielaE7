@@ -1,0 +1,103 @@
+public class CuentaBancaria { 
+String nombresTitular; 
+String apellidosTitular; 
+int numeroCuenta; 
+enum tipo { AHORROS, CORRIENTE } 
+tipo tipoCuenta; 
+float saldo = 0; 
+ 
+   CuentaBancaria(String nombresTitular, String apellidosTitular, 
+int numeroCuenta, tipo tipoCuenta) { 
+       this.nombresTitular = nombresTitular; 
+       this.apellidosTitular = apellidosTitular; 
+       this.numeroCuenta = numeroCuenta; 
+       this.tipoCuenta = tipoCuenta; 
+   } 
+ 
+   void imprimir() { 
+       System.out.println("Nombres del titular = " + 
+nombresTitular); 
+       System.out.println("Apellidos del titular = " + 
+apellidosTitular); 
+       System.out.println("Número de cuenta = " + numeroCuenta); 
+       System.out.println("Tipo de cuenta = " + tipoCuenta); 
+       System.out.println("Saldo = " + saldo); 
+   } 
+ 
+   void consultarSaldo() { 
+       System.out.println("El saldo actual es = " + saldo); 
+   } 
+ 
+   boolean consignar(int valor) { 
+       if (valor > 0) { 
+           saldo = saldo + valor; 
+           System.out.println("Se ha consignado $" + valor + " en 
+la cuenta. El nuevo saldo es $" + saldo); 
+           return true; 
+       } else { 
+           System.out.println("El valor a consignar debe ser mayor 
+que cero."); 
+           return false; 
+       } 
+   } 
+ 
+   boolean retirar(int valor) { 
+       if ((valor > 0) && (valor <= saldo)) { 
+           saldo = saldo - valor; 
+           System.out.println("Se ha retirado $" + valor + " de la 
+cuenta. El nuevo saldo es $" + saldo); 
+           return true; 
+       } else { 
+           System.out.println("El valor a retirar debe ser menor 
+que el saldo actual."); 
+           return false; 
+       } 
+   } 
+ 
+ 
+ 
+   public static void main(String[] args) { 
+       Scanner scanner = new Scanner(System.in); 
+ 
+       System.out.println("=== Crear cuenta bancaria ==="); 
+       System.out.print("Nombres del titular: "); 
+       String nombres = scanner.nextLine(); 
+       System.out.print("Apellidos del titular: "); 
+       String apellidos = scanner.nextLine(); 
+       System.out.print("Número de cuenta: "); 
+       int numCuenta = scanner.nextInt(); 
+       System.out.print("Tipo de cuenta (1=AHORROS, 2=CORRIENTE): 
+"); 
+       int opTipo = scanner.nextInt(); 
+       scanner.nextLine(); 
+       tipo tipoCuenta = (opTipo == 1) ? tipo.AHORROS : 
+tipo.CORRIENTE; 
+ 
+       CuentaBancaria cuenta = new CuentaBancaria(nombres, 
+apellidos, numCuenta, tipoCuenta); 
+ 
+       System.out.println("\n=== Información de la cuenta ==="); 
+       cuenta.imprimir(); 
+ 
+       int opcion = 0; 
+       while (opcion != 4) { 
+           System.out.println("\n1. Consignar  2. Retirar  3. 
+Consultar saldo  4. Salir"); 
+           System.out.print("Opción: "); 
+           opcion = scanner.nextInt(); 
+           if (opcion == 1) { 
+               System.out.print("Valor a consignar: "); 
+               int valor = scanner.nextInt(); 
+               cuenta.consignar(valor); 
+           } else if (opcion == 2) { 
+               System.out.print("Valor a retirar: "); 
+               int valor = scanner.nextInt(); 
+               cuenta.retirar(valor); 
+           } else if (opcion == 3) { 
+               cuenta.consultarSaldo(); 
+           } 
+       } 
+ 
+       scanner.close(); 
+   } 
+}
