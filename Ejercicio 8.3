@@ -1,0 +1,454 @@
+package ejercicio_8_3;
+
+public class FiguraGeometrica {
+
+    private double volumen;
+    private double superficie;
+
+    public void setVolumen(double volumen) {
+        this.volumen = volumen;
+    }
+
+    public void setSuperficie(double superficie) {
+        this.superficie = superficie;
+    }
+
+    public double getVolumen() {
+        return this.volumen;
+    }
+
+    public double getSuperficie() {
+        return this.superficie;
+    }
+}
+package ejercicio_8_3;
+
+public class Cilindro extends FiguraGeometrica {
+
+    private double radio;
+    private double altura;
+
+    public Cilindro(double radio, double altura) {
+        this.radio = radio;
+        this.altura = altura;
+
+        this.setVolumen(calcularVolumen());
+        this.setSuperficie(calcularSuperficie());
+    }
+
+    public double calcularVolumen() {
+        return Math.PI * altura * Math.pow(radio, 2.0);
+    }
+
+    public double calcularSuperficie() {
+        double areaLadoA = 2.0 * Math.PI * radio * altura;
+        double areaLadoB = 2.0 * Math.PI * Math.pow(radio, 2.0);
+
+        return areaLadoA + areaLadoB;
+    }
+package ejercicio_8_3;
+
+public class Esfera extends FiguraGeometrica {
+
+    private double radio;
+
+    public Esfera(double radio) {
+        this.radio = radio;
+
+        this.setVolumen(calcularVolumen());
+        this.setSuperficie(calcularSuperficie());
+    }
+
+    public double calcularVolumen() {
+        return 1.333 * Math.PI * Math.pow(this.radio, 3.0);
+    }
+
+    public double calcularSuperficie() {
+        return 4.0 * Math.PI * Math.pow(this.radio, 2.0);
+    }
+}
+package ejercicio_8_3;
+
+public class Piramide extends FiguraGeometrica {
+
+    private double base;
+    private double altura;
+    private double apotema;
+
+    public Piramide(double base, double altura, double apotema) {
+        this.base = base;
+        this.altura = altura;
+        this.apotema = apotema;
+
+        this.setVolumen(calcularVolumen());
+        this.setSuperficie(calcularSuperficie());
+    }
+
+    public double calcularVolumen() {
+        return (Math.pow(base, 2.0) * altura) / 3.0;
+    }
+
+    public double calcularSuperficie() {
+        double areaBase = Math.pow(base, 2.0);
+        double areaLado = 2.0 * base * apotema;
+
+        return areaBase + areaLado;
+    }
+}
+package ejercicio_8_3;
+
+public class Principal {
+
+    public static void main(String[] args) {
+
+        VentanaPrincipal miVentanaPrincipal;
+        miVentanaPrincipal = new VentanaPrincipal();
+
+        miVentanaPrincipal.setVisible(true);
+        miVentanaPrincipal.setResizable(false);
+    }
+}
+package ejercicio_8_3;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class VentanaCilindro extends JFrame implements ActionListener {
+
+    private Container contenedor;
+    private JLabel radio, altura, volumen, superficie;
+    private JTextField campoRadio, campoAltura;
+    private JButton calcular;
+
+    public VentanaCilindro() {
+
+        inicio();
+
+        setTitle("Cilindro");
+        setSize(280, 210);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    private void inicio() {
+
+        contenedor = getContentPane();
+        contenedor.setLayout(null);
+
+        radio = new JLabel("Radio (cms):");
+        radio.setBounds(20, 20, 135, 23);
+
+        campoRadio = new JTextField();
+        campoRadio.setBounds(100, 20, 135, 23);
+
+        altura = new JLabel("Altura (cms):");
+        altura.setBounds(20, 50, 135, 23);
+
+        campoAltura = new JTextField();
+        campoAltura.setBounds(100, 50, 135, 23);
+
+        calcular = new JButton("Calcular");
+        calcular.setBounds(100, 80, 135, 23);
+        calcular.addActionListener(this);
+
+        volumen = new JLabel("Volumen (cm3):");
+        volumen.setBounds(20, 110, 230, 23);
+
+        superficie = new JLabel("Superficie (cm2):");
+        superficie.setBounds(20, 140, 230, 23);
+
+        contenedor.add(radio);
+        contenedor.add(campoRadio);
+        contenedor.add(altura);
+        contenedor.add(campoAltura);
+        contenedor.add(calcular);
+        contenedor.add(volumen);
+        contenedor.add(superficie);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+
+        try {
+            double radioVal =
+                Double.parseDouble(campoRadio.getText());
+
+            double alturaVal =
+                Double.parseDouble(campoAltura.getText());
+
+            if (radioVal <= 0 || alturaVal <= 0) {
+                throw new NumberFormatException();
+            }
+
+            Cilindro cilindro = new Cilindro(radioVal, alturaVal);
+
+            volumen.setText("Volumen (cm3): " +
+                String.format("%.2f", cilindro.calcularVolumen()));
+
+            superficie.setText("Superficie (cm2): " +
+                String.format("%.2f", cilindro.calcularSuperficie()));
+
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Campo nulo o error en formato de numero",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+}
+package ejercicio_8_3;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class VentanaEsfera extends JFrame implements ActionListener {
+
+    private Container contenedor;
+    private JLabel radio, volumen, superficie;
+    private JTextField campoRadio;
+    private JButton calcular;
+
+    public VentanaEsfera() {
+
+        inicio();
+
+        setTitle("Esfera");
+        setSize(280, 200);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    private void inicio() {
+
+        contenedor = getContentPane();
+        contenedor.setLayout(null);
+
+        radio = new JLabel("Radio (cms):");
+        radio.setBounds(20, 20, 135, 23);
+
+        campoRadio = new JTextField();
+        campoRadio.setBounds(100, 20, 135, 23);
+
+        calcular = new JButton("Calcular");
+        calcular.setBounds(100, 50, 135, 23);
+        calcular.addActionListener(this);
+
+        volumen = new JLabel("Volumen (cm3):");
+        volumen.setBounds(20, 90, 230, 23);
+
+        superficie = new JLabel("Superficie (cm2):");
+        superficie.setBounds(20, 120, 230, 23);
+
+        contenedor.add(radio);
+        contenedor.add(campoRadio);
+        contenedor.add(calcular);
+        contenedor.add(volumen);
+        contenedor.add(superficie);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evento) {
+
+        if (evento.getSource() == calcular) {
+
+            try {
+                double radioVal =
+                    Double.parseDouble(campoRadio.getText());
+
+                if (radioVal <= 0) {
+                    throw new NumberFormatException();
+                }
+
+                Esfera esfera = new Esfera(radioVal);
+
+                volumen.setText("Volumen (cm3): " +
+                    String.format("%.2f", esfera.calcularVolumen()));
+
+                superficie.setText("Superficie (cm2): " +
+                    String.format("%.2f", esfera.calcularSuperficie()));
+
+            } catch (NumberFormatException e) {
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Campo nulo o error en formato de numero",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+    }
+}
+package ejercicio_8_3;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class VentanaPiramide extends JFrame implements ActionListener {
+
+    private Container contenedor;
+    private JLabel base, altura, apotema, volumen, superficie;
+    private JTextField campoBase, campoAltura, campoApotema;
+    private JButton calcular;
+
+    public VentanaPiramide() {
+
+        inicio();
+
+        setTitle("Piramide");
+        setSize(280, 240);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    private void inicio() {
+
+        contenedor = getContentPane();
+        contenedor.setLayout(null);
+
+        base = new JLabel("Base (cms):");
+        base.setBounds(20, 20, 135, 23);
+
+        campoBase = new JTextField();
+        campoBase.setBounds(120, 20, 135, 23);
+
+        altura = new JLabel("Altura (cms):");
+        altura.setBounds(20, 50, 135, 23);
+
+        campoAltura = new JTextField();
+        campoAltura.setBounds(120, 50, 135, 23);
+
+        apotema = new JLabel("Apotema (cms):");
+        apotema.setBounds(20, 80, 135, 23);
+
+        campoApotema = new JTextField();
+        campoApotema.setBounds(120, 80, 135, 23);
+
+        calcular = new JButton("Calcular");
+        calcular.setBounds(120, 110, 135, 23);
+        calcular.addActionListener(this);
+
+        volumen = new JLabel("Volumen (cm3):");
+        volumen.setBounds(20, 140, 230, 23);
+
+        superficie = new JLabel("Superficie (cm2):");
+        superficie.setBounds(20, 170, 230, 23);
+
+        contenedor.add(base);
+        contenedor.add(campoBase);
+        contenedor.add(altura);
+        contenedor.add(campoAltura);
+        contenedor.add(apotema);
+        contenedor.add(campoApotema);
+        contenedor.add(calcular);
+        contenedor.add(volumen);
+        contenedor.add(superficie);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+
+        try {
+            double baseVal =
+                Double.parseDouble(campoBase.getText());
+
+            double alturaVal =
+                Double.parseDouble(campoAltura.getText());
+
+            double apotemaVal =
+                Double.parseDouble(campoApotema.getText());
+
+            if (baseVal <= 0 || alturaVal <= 0 || apotemaVal <= 0) {
+                throw new NumberFormatException();
+            }
+
+            Piramide piramide =
+                new Piramide(baseVal, alturaVal, apotemaVal);
+
+            volumen.setText("Volumen (cm3): " +
+                String.format("%.2f", piramide.calcularVolumen()));
+
+            superficie.setText("Superficie (cm2): " +
+                String.format("%.2f", piramide.calcularSuperficie()));
+
+        } catch (NumberFormatException e) {
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Campo nulo o error en formato de numero",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+}
+package ejercicio_8_3;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class VentanaPrincipal extends JFrame implements ActionListener {
+
+    private Container contenedor;
+    private JButton cilindro, esfera, piramide;
+
+    public VentanaPrincipal() {
+
+        inicio();
+
+        setTitle("Figuras");
+        setSize(350, 160);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+    }
+
+    private void inicio() {
+
+        contenedor = getContentPane();
+        contenedor.setLayout(null);
+
+        cilindro = new JButton("Cilindro");
+        cilindro.setBounds(20, 50, 90, 30);
+        cilindro.addActionListener(this);
+
+        esfera = new JButton("Esfera");
+        esfera.setBounds(125, 50, 90, 30);
+        esfera.addActionListener(this);
+
+        piramide = new JButton("Piramide");
+        piramide.setBounds(230, 50, 100, 30);
+        piramide.addActionListener(this);
+
+        contenedor.add(cilindro);
+        contenedor.add(esfera);
+        contenedor.add(piramide);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evento) {
+
+        if (evento.getSource() == esfera) {
+            new VentanaEsfera().setVisible(true);
+        }
+
+        if (evento.getSource() == cilindro) {
+            new VentanaCilindro().setVisible(true);
+        }
+
+        if (evento.getSource() == piramide) {
+            new VentanaPiramide().setVisible(true);
+        }
+    }
+}
+}
