@@ -1,0 +1,206 @@
+package ejercicio_8_2;
+
+public class Notas {
+
+    public double[] listaNotas = new double[5];
+
+    public double calcularPromedio() {
+        double suma = 0;
+
+        for (double nota : listaNotas) {
+            suma += nota;
+        }
+
+        return suma / listaNotas.length;
+    }
+
+    public double calcularDesviacion() {
+        double promedio = calcularPromedio();
+        double sumaCuadrados = 0;
+
+        for (double nota : listaNotas) {
+            sumaCuadrados += Math.pow(nota - promedio, 2);
+        }
+
+        return Math.sqrt(sumaCuadrados / listaNotas.length);
+    }
+
+    public double calcularMayor() {
+        double mayor = listaNotas[0];
+
+        for (double nota : listaNotas) {
+            if (nota > mayor) {
+                mayor = nota;
+            }
+        }
+
+        return mayor;
+    }
+
+    public double calcularMenor() {
+        double menor = listaNotas[0];
+
+        for (double nota : listaNotas) {
+            if (nota < menor) {
+                menor = nota;
+            }
+        }
+
+        return menor;
+    }
+    package ejercicio_8_2;
+
+public class Principal {
+
+    public static void main(String[] args) {
+
+        VentanaPrincipal miVentanaPrincipal;
+        miVentanaPrincipal = new VentanaPrincipal();
+
+        miVentanaPrincipal.setVisible(true);
+    }
+}
+package ejercicio_8_2;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class VentanaPrincipal extends JFrame implements ActionListener {
+
+    private JLabel labelNota1, labelNota2, labelNota3, labelNota4, labelNota5;
+    private JTextField campoNota1, campoNota2, campoNota3, campoNota4, campoNota5;
+    private JButton calcular, limpiar;
+    private JLabel promedio, desviacion, mayor, menor;
+
+    public VentanaPrincipal() {
+
+        setTitle("Notas del Estudiante");
+        setSize(420, 410);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        Container contenedor = getContentPane();
+        contenedor.setLayout(null);
+
+        labelNota1 = new JLabel("Nota 1:");
+        labelNota1.setBounds(20, 20, 80, 25);
+        contenedor.add(labelNota1);
+
+        campoNota1 = new JTextField();
+        campoNota1.setBounds(110, 20, 150, 25);
+        contenedor.add(campoNota1);
+
+        labelNota2 = new JLabel("Nota 2:");
+        labelNota2.setBounds(20, 55, 80, 25);
+        contenedor.add(labelNota2);
+
+        campoNota2 = new JTextField();
+        campoNota2.setBounds(110, 55, 150, 25);
+        contenedor.add(campoNota2);
+
+        labelNota3 = new JLabel("Nota 3:");
+        labelNota3.setBounds(20, 90, 80, 25);
+        contenedor.add(labelNota3);
+
+        campoNota3 = new JTextField();
+        campoNota3.setBounds(110, 90, 150, 25);
+        contenedor.add(campoNota3);
+
+        labelNota4 = new JLabel("Nota 4:");
+        labelNota4.setBounds(20, 125, 80, 25);
+        contenedor.add(labelNota4);
+
+        campoNota4 = new JTextField();
+        campoNota4.setBounds(110, 125, 150, 25);
+        contenedor.add(campoNota4);
+
+        labelNota5 = new JLabel("Nota 5:");
+        labelNota5.setBounds(20, 160, 80, 25);
+        contenedor.add(labelNota5);
+
+        campoNota5 = new JTextField();
+        campoNota5.setBounds(110, 160, 150, 25);
+        contenedor.add(campoNota5);
+
+        calcular = new JButton("Calcular");
+        calcular.setBounds(100, 205, 110, 30);
+        calcular.addActionListener(this);
+        contenedor.add(calcular);
+
+        limpiar = new JButton("Limpiar");
+        limpiar.setBounds(220, 205, 110, 30);
+        limpiar.addActionListener(this);
+        contenedor.add(limpiar);
+
+        promedio = new JLabel("Promedio = ");
+        promedio.setBounds(20, 250, 370, 20);
+        contenedor.add(promedio);
+
+        desviacion = new JLabel("Desviacion estandar = ");
+        desviacion.setBounds(20, 275, 370, 20);
+        contenedor.add(desviacion);
+
+        mayor = new JLabel("Valor mayor = ");
+        mayor.setBounds(20, 300, 370, 20);
+        contenedor.add(mayor);
+
+        menor = new JLabel("Valor menor = ");
+        menor.setBounds(20, 325, 370, 20);
+        contenedor.add(menor);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evento) {
+
+        if (evento.getSource() == calcular) {
+
+            try {
+                Notas notas = new Notas();
+
+                notas.listaNotas[0] = Double.parseDouble(campoNota1.getText());
+                notas.listaNotas[1] = Double.parseDouble(campoNota2.getText());
+                notas.listaNotas[2] = Double.parseDouble(campoNota3.getText());
+                notas.listaNotas[3] = Double.parseDouble(campoNota4.getText());
+                notas.listaNotas[4] = Double.parseDouble(campoNota5.getText());
+
+                promedio.setText("Promedio = " +
+                    String.format("%.2f", notas.calcularPromedio()));
+
+                desviacion.setText("Desviacion estandar = " +
+                    String.format("%.2f", notas.calcularDesviacion()));
+
+                mayor.setText("Valor mayor = " +
+                    String.valueOf(notas.calcularMayor()));
+
+                menor.setText("Valor menor = " +
+                    String.valueOf(notas.calcularMenor()));
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Ingresa las cinco notas en formato numerico.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+
+        if (evento.getSource() == limpiar) {
+
+            campoNota1.setText("");
+            campoNota2.setText("");
+            campoNota3.setText("");
+            campoNota4.setText("");
+            campoNota5.setText("");
+
+            promedio.setText("Promedio = ");
+            desviacion.setText("Desviacion estandar = ");
+            mayor.setText("Valor mayor = ");
+            menor.setText("Valor menor = ");
+        }
+    }
+}
+
+}
