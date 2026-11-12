@@ -1,0 +1,113 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class Programador:
+    def __init__(self, nombre, apellidos):
+        self.nombre = nombre
+        self.apellidos = apellidos
+
+class EquipoMaratonProgramacion:
+    def __init__(self, nombre_equipo, universidad, lenguaje):
+        self.nombre_equipo = nombre_equipo
+        self.universidad = universidad
+        self.lenguaje = lenguaje
+        self.programadores = []
+        self.tamano_maximo = 3
+
+    @staticmethod
+    def validar_campo(valor):
+        """Valida que el campo no tenga dígitos ni esté vacío."""
+        if any(char.isdigit() for char in valor):
+            raise Exception(f"El campo '{valor}' no puede tener dígitos.")
+        if not valor.strip():
+            raise Exception("El campo no puede estar vacío.")
+
+    def añadir_programador(self, programador):
+        if len(self.programadores) < self.tamano_maximo:
+            self.programadores.append(programador)
+            return True
+        else:
+            raise Exception("El equipo ya está lleno (máximo 3 integrantes).")
+
+class VentanaMaraton(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Validación de Campos")
+        self.geometry("400x550")
+        self.resizable(False, False)
+        self.equipo = None
+        self.inicio()
+
+    def inicio(self):
+        tk.Label(self, text="DATOS DEL EQUIPO", font=("Arial", 10, "bold")).place(x=20, y=10)
+        tk.Label(self, text="Nombre Equipo:").place(x=20, y=40)
+        self.campo_equipo = tk.Entry(self)
+        self.campo_equipo.place(x=150, y=40, width=200)
+
+        tk.Label(self, text="Universidad:").place(x=20, y=70)
+        self.campo_u = tk.Entry(self)
+        self.campo_u.place(x=150, y=70, width=200)
+
+        tk.Label(self, text="Lenguaje:").place(x=20, y=100)
+        self.campo_lenguaje = tk.Entry(self)
+        self.campo_lenguaje.place(x=150, y=100, width=200)
+
+        tk.Label(self, text="DATOS DEL INTEGRANTE", font=("Arial", 10, "bold")).place(x=20, y=140)
+        tk.Label(self, text="Nombre:").place(x=20, y=170)
+        self.campo_nom = tk.Entry(self)
+        self.campo_nom.place(x=150, y=170, width=200)
+
+        tk.Label(self, text="Apellidos:").place(x=20, y=200)
+        self.campo_ape = tk.Entry(self)
+        self.campo_ape.place(x=150, y=200, width=200)
+
+        tk.Button(self, text="Añadir Integrante", command=self.registrar).place(x=60, y=250, width=130)
+        tk.Button(self, text="Limpiar Campos", command=self.limpiar).place(x=210, y=250, width=130)
+
+        tk.Label(self, text="Log de validación y flujo:", font=("Arial", 9, "italic")).place(x=20, y=300)
+        self.consola = tk.Text(self, height=10, width=45, bg="black", fg="#00FF00")
+        self.consola.place(x=20, y=320)
+        self.consola.config(state=tk.DISABLED)
+
+    def escribir_log(self, mensaje):
+        self.consola.config(state=tk.NORMAL)
+        self.consola.insert(tk.END, mensaje + "\n")
+        self.consola.see(tk.END)
+        self.consola.config(state=tk.DISABLED)
+
+    def registrar(self):
+        self.escribir_log(">>> Validando campos...")
+        try:
+            nom_e = self.campo_equipo.get()
+            uni = self.campo_u.get()
+            lang = self.campo_lenguaje.get()
+            nom_p = self.campo_nom.get()
+            ape_p = self.campo_ape.get()
+
+            EquipoMaratonProgramacion.validar_campo(nom_e)
+            EquipoMaratonProgramacion.validar_campo(uni)
+            EquipoMaratonProgramacion.validar_campo(lang)
+            EquipoMaratonProgramacion.validar_campo(nom_p)
+            EquipoMaratonProgramacion.validar_campo(ape_p)
+
+            if not self.equipo:
+                self.equipo = EquipoMaratonProgramacion(nom_e, uni, lang)
+                self.escribir_log(f"Equipo '{nom_e}' creado.")
+
+            nuevo = Programador(nom_p, ape_p)
+            if self.equipo.añadir_programador(nuevo):
+                self.escribir_log(f"ÉXITO: {nom_p} añadido. Total: {len(self.equipo.programadores)}")
+                messagebox.showinfo("Registro", f"Integrante {nom_p} añadido con éxito.")
+        except Exception as e:
+            self.escribir_log(f"EXCEPCIÓN: {e}")
+            messagebox.showerror("Error de Datos", str(e))
+        finally:
+            self.escribir_log("Ciclo de registro terminado.\n")
+
+    def limpiar(self):
+        self.campo_nom.delete(0, tk.END)
+        self.campo_ape.delete(0, tk.END)
+
+if __name__ == "__main__":
+    app = VentanaMaraton()
+    app.mainloop()
