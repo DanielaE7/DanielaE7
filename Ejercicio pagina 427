@@ -1,0 +1,66 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class VentanaLectorArchivos(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Lectura de Archivos")
+        self.geometry("400x500")
+        self.resizable(False, False)
+        self.inicio()
+
+    def inicio(self):
+        tk.Label(self, text="Nombre/Ruta del archivo:").place(x=20, y=20)
+        self.campo_archivo = tk.Entry(self)
+        self.campo_archivo.insert(0, "prueba.txt")
+        self.campo_archivo.place(x=170, y=20, width=200)
+
+        btn_leer = tk.Button(self, text="Leer Archivo", command=self.leer_archivo)
+        btn_leer.place(x=60, y=60, width=130)
+        btn_limpiar = tk.Button(self, text="Limpiar Todo", command=self.limpiar)
+        btn_limpiar.place(x=210, y=60, width=130)
+
+        tk.Label(self, text="Contenido del archivo:").place(x=20, y=100)
+        self.area_texto = tk.Text(self, height=10, width=45, bg="#f9f9f9")
+        self.area_texto.place(x=20, y=120)
+
+        tk.Label(self, text="Log de ejecución (Flujo):", font=("Arial", 9, "italic")).place(x=20, y=300)
+        self.consola = tk.Text(self, height=8, width=45, bg="black", fg="#00FF00")
+        self.consola.place(x=20, y=320)
+        self.consola.config(state=tk.DISABLED)
+
+    def escribir_log(self, mensaje):
+        self.consola.config(state=tk.NORMAL)
+        self.consola.insert(tk.END, mensaje + "\n")
+        self.consola.see(tk.END)
+        self.consola.config(state=tk.DISABLED)
+
+    def leer_archivo(self):
+        nombre_archivo = self.campo_archivo.get()
+        self.escribir_log(">>> Iniciando bloque try")
+        self.area_texto.delete('1.0', tk.END)
+        try:
+            self.escribir_log(f"Intentando abrir: {nombre_archivo}")
+            with open(nombre_archivo, "r", encoding="utf-8") as archivo:
+                for linea in archivo:
+                    self.area_texto.insert(tk.END, linea)
+            self.escribir_log("ARCHIVO LEÍDO CON ÉXITO.")
+        except FileNotFoundError:
+            self.escribir_log("EXCEPCIÓN: Archivo no encontrado.")
+            messagebox.showerror("Error", f"No se pudo encontrar el archivo: {nombre_archivo}")
+        except Exception as e:
+            self.escribir_log(f"ERROR GENERAL: {e}")
+            messagebox.showerror("Error", "Ocurrió un error al leer el archivo.")
+        finally:
+            self.escribir_log("Ejecutando bloque finally (Cierre de flujo)")
+            self.escribir_log("---------------------------------------")
+
+    def limpiar(self):
+        self.area_texto.delete('1.0', tk.END)
+        self.consola.config(state=tk.NORMAL)
+        self.consola.delete('1.0', tk.END)
+        self.consola.config(state=tk.DISABLED)
+
+if __name__ == "__main__":
+    app = VentanaLectorArchivos()
+    app.mainloop()
