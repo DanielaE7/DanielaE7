@@ -1,0 +1,80 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class VentanaDivision(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Excepciones")
+        self.geometry("300x350")
+        self.resizable(False, False)
+        self.inicio()
+
+    def inicio(self):
+        tk.Label(self, text="Numerador:").place(x=20, y=20)
+        self.campo_numerador = tk.Entry(self)
+        self.campo_numerador.place(x=120, y=20, width=135)
+
+        tk.Label(self, text="Denominador:").place(x=20, y=50)
+        self.campo_denominador = tk.Entry(self)
+        self.campo_denominador.place(x=120, y=50, width=135)
+
+        tk.Label(self, text="Cociente:").place(x=20, y=80)
+        self.campo_cociente = tk.Entry(self)
+        self.campo_cociente.place(x=120, y=80, width=135)
+        self.campo_cociente.config(state="readonly")
+
+        # Botones
+        btn_calcular = tk.Button(self, text="Calcular", command=self.calcular)
+        btn_calcular.place(x=40, y=130, width=100)
+        btn_limpiar = tk.Button(self, text="Limpiar", command=self.limpiar)
+        btn_limpiar.place(x=150, y=130, width=100)
+
+        # Consola para el log de try-except-finally
+        tk.Label(self, text="Flujo de la Excepción:", font=("Arial", 9, "italic")).place(x=20, y=170)
+        self.consola = tk.Text(self, height=6, width=32, bg="black", fg="#00FF00")
+        self.consola.place(x=20, y=190)
+        self.consola.config(state=tk.DISABLED)
+
+    def escribir_log(self, mensaje):
+        self.consola.config(state=tk.NORMAL)
+        self.consola.insert(tk.END, mensaje + "\n")
+        self.consola.see(tk.END)
+        self.consola.config(state=tk.DISABLED)
+
+    def calcular(self):
+        self.escribir_log(">>> Iniciando bloque try")
+        try:
+            num = float(self.campo_numerador.get())
+            den = float(self.campo_denominador.get())
+
+            resultado = num / den
+
+            self.campo_cociente.config(state="normal")
+            self.campo_cociente.delete(0, tk.END)
+            self.campo_cociente.insert(0, f"{resultado:.2f}")
+            self.campo_cociente.config(state="readonly")
+            self.escribir_log("Operación exitosa")
+
+        except ZeroDivisionError:
+            self.escribir_log("EXCEPCIÓN: División por cero")
+            messagebox.showerror("Error", "No se puede dividir por cero.")
+        except ValueError:
+            self.escribir_log("EXCEPCIÓN: Formato incorrecto")
+            messagebox.showwarning("Atención", "Ingrese solo valores numéricos.")
+        finally:
+            self.escribir_log("Ejecutando bloque finally")
+            self.escribir_log("--------------------------")
+
+    def limpiar(self):
+        self.campo_numerador.delete(0, tk.END)
+        self.campo_denominador.delete(0, tk.END)
+        self.campo_cociente.config(state="normal")
+        self.campo_cociente.delete(0, tk.END)
+        self.campo_cociente.config(state="readonly")
+        self.consola.config(state=tk.NORMAL)
+        self.consola.delete('1.0', tk.END)
+        self.consola.config(state=tk.DISABLED)
+
+if __name__ == "__main__":
+    app = VentanaDivision()
+    app.mainloop()
