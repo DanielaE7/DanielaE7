@@ -1,0 +1,93 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class Vendedor:
+    def __init__(self, nombre, apellidos):
+        self.nombre = nombre
+        self.apellidos = apellidos
+        self.edad = 0
+
+    def verificar_edad(self, edad):
+        """Valida la edad y lanza excepciones explícitas."""
+        if edad < 18:
+            raise ValueError("El vendedor debe ser mayor de 18 años.")
+        if 0 <= edad < 120:
+            self.edad = edad
+        else:
+            raise ValueError("La edad no puede ser negativa ni mayor a 120.")
+
+class VentanaVendedor(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Lanzamiento de Excepciones")
+        self.geometry("350x450")
+        self.resizable(False, False)
+        self.inicio()
+
+    def inicio(self):
+        tk.Label(self, text="Nombre:").place(x=20, y=20)
+        self.campo_nombre = tk.Entry(self)
+        self.campo_nombre.place(x=120, y=20, width=180)
+
+        tk.Label(self, text="Apellidos:").place(x=20, y=50)
+        self.campo_apellidos = tk.Entry(self)
+        self.campo_apellidos.place(x=120, y=50, width=180)
+
+        tk.Label(self, text="Edad:").place(x=20, y=80)
+        self.campo_edad = tk.Entry(self)
+        self.campo_edad.place(x=120, y=80, width=180)
+
+        btn_registrar = tk.Button(self, text="Registrar", command=self.registrar)
+        btn_registrar.place(x=50, y=130, width=100)
+        btn_limpiar = tk.Button(self, text="Limpiar", command=self.limpiar)
+        btn_limpiar.place(x=180, y=130, width=100)
+
+        tk.Label(self, text="Log de validación:", font=("Arial", 9, "italic")).place(x=20, y=180)
+        self.consola = tk.Text(self, height=10, width=38, bg="black", fg="#00FF00")
+        self.consola.place(x=20, y=200)
+        self.consola.config(state=tk.DISABLED)
+
+    def escribir_log(self, mensaje):
+        self.consola.config(state=tk.NORMAL)
+        self.consola.insert(tk.END, mensaje + "\n")
+        self.consola.see(tk.END)
+        self.consola.config(state=tk.DISABLED)
+
+    def registrar(self):
+        self.escribir_log(">>> Iniciando validación...")
+        try:
+            nom = self.campo_nombre.get()
+            ape = self.campo_apellidos.get()
+
+            if not nom or not ape:
+                raise ValueError("Todos los campos son obligatorios.")
+
+            edad_ingresada = int(self.campo_edad.get())
+            vendedor = Vendedor(nom, ape)
+
+            self.escribir_log("Verificando edad en la clase Vendedor...")
+            vendedor.verificar_edad(edad_ingresada)
+
+            self.escribir_log(f"ÉXITO: {vendedor.nombre} registrado.")
+            messagebox.showinfo("Registro", f"Vendedor {nom} {ape} guardado correctamente.")
+
+        except ValueError as e:
+            self.escribir_log(f"EXCEPCIÓN: {e}")
+            messagebox.showerror("Error de Validación", str(e))
+        except Exception as e:
+            self.escribir_log(f"ERROR GENERAL: {e}")
+        finally:
+            self.escribir_log("Fin del proceso de registro.")
+            self.escribir_log("------------------------------")
+
+    def limpiar(self):
+        self.campo_nombre.delete(0, tk.END)
+        self.campo_apellidos.delete(0, tk.END)
+        self.campo_edad.delete(0, tk.END)
+        self.consola.config(state=tk.NORMAL)
+        self.consola.delete('1.0', tk.END)
+        self.consola.config(state=tk.DISABLED)
+
+if __name__ == "__main__":
+    app = VentanaVendedor()
+    app.mainloop()
